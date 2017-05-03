@@ -1,0 +1,12 @@
+{
+    "autoload":{
+        "psr-4":{
+            "Frame\\":"frame/",
+            "Action\\":"action/",
+            "Plugin\\":"plugin/"
+        }
+    },
+    "require": {
+        "workerman/workerman": "^3.4"
+    }
+}
