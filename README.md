@@ -10,5 +10,5 @@ wframe是一个基于[Workerman](http://www.workerman.net/)超级精简且高性
 * [Workerman](http://www.workerman.net/)
 # 运行
 * `composer install`
-* `php app_server.php`
+* `php app_server.php start`
 * 访问 http://localhost:9502
