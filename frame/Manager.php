@@ -41,6 +41,10 @@ class Manager {
             foreach ($this->pluginList as /** @var PluginInterface $plugin*/ $plugin) {
                 $plugin->afterAction($connection, $data);
             }
+            //如果不是keep-alive的连接，则主动关闭，保证与apache bench的兼容性
+            if (!(isset($data['server']['HTTP_CONNECTION']) && $data['server']['HTTP_CONNECTION']=='Keep-Alive')) {
+                $connection->close();
+            }
         } catch (\Exception $e) {
             echo $e->getTraceAsString().PHP_EOL;
             //如果HTTP请求还没有结束，就可以报500
