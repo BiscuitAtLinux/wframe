@@ -30,7 +30,7 @@ class LogPlugin extends \Frame\BasePlugin {
      * 进入Action前记录请求开始时间
      * @{inheritDoc}
      */
-    public function beforeAction(\Workerman\Connection\TcpConnection $connection, $data){
+    public function beforeAction(\Workerman\Connection\TcpConnection $connection, &$data){
         $this->startTime = microtime(true);
     }
     

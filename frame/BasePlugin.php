@@ -9,7 +9,7 @@ class BasePlugin implements PluginInterface {
     /**
      * @{inheritDoc}
      */
-    public function beforeAction(\Workerman\Connection\TcpConnection $connection, $data){
+    public function beforeAction(\Workerman\Connection\TcpConnection $connection, &$data){
     }
     
     /**

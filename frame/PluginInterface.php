@@ -11,7 +11,7 @@ interface PluginInterface {
      * @param \Workerman\Connection\TcpConnection $request
      * @param array $data
      */
-    public function beforeAction(\Workerman\Connection\TcpConnection $connection, $data);
+    public function beforeAction(\Workerman\Connection\TcpConnection $connection, &$data);
     
     /**
      * 实际Action执行之后执行
