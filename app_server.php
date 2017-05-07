@@ -19,9 +19,9 @@ echo 'HTTP Server listen at '.$addr.':'.$port.PHP_EOL;
 
 //Worker进程数量
 $http_worker->count = 4;
-//每个进程最多执行的请求数，<=0则不限制
+//每个进程最多执行的请求数，<=0则不限制，可以用reload代替
 //FIXME 高并发下会导致 Connection reset by peer，可能是进程有积压的请求，但是却退出了
-$MAX_REQUEST= 5000;
+$MAX_REQUEST= 0;
 
 //每个Worker进程启动时执行，执行进程初始化
 $http_worker->onWorkerStart = function ($worker){
