@@ -30,6 +30,9 @@ class Manager {
     public function doRequest(\Workerman\Connection\TcpConnection $connection, $data) {
         try {
             $httpEnd = false;
+            //是否在未声明长连接时主动关闭连接，如果是异步接口请在Action中设为false，否则会导致某些HTTP/1.0的客户的被提前关闭
+            $connection->autoCloseConnection = true;
+
             //执行插件beforeAction
             foreach ($this->pluginList as /** @var PluginInterface $plugin*/ $plugin) {
                 $plugin->beforeAction($connection, $data);
@@ -41,8 +44,9 @@ class Manager {
             foreach ($this->pluginList as /** @var PluginInterface $plugin*/ $plugin) {
                 $plugin->afterAction($connection, $data);
             }
-            //如果不是keep-alive的连接，则主动关闭，保证与apache bench的兼容性
-            if (!(isset($data['server']['HTTP_CONNECTION']) && $data['server']['HTTP_CONNECTION']=='Keep-Alive')) {
+            //如果不是keep-alive的连接，则主动关闭，保证与apache bench等HTTP/1.0老客户的的兼容性
+            if ($connection->autoCloseConnection && $data['server']['SERVER_PROTOCOL']=='HTTP/1.0' &&
+                !(isset($data['server']['HTTP_CONNECTION']) && $data['server']['HTTP_CONNECTION']=='Keep-Alive')) {
                 $connection->close();
             }
         } catch (\Exception $e) {
